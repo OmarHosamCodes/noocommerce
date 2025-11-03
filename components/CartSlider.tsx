@@ -86,6 +86,7 @@ export default function CartSlider() {
                                 <div className="flex-1">
                                     <div className="font-medium text-xl">{item.name}</div>
                                     <div className="text-md text-gray-600">{siteConfig.currency} {item.price}</div>
+                                    {item?.variationName && <div className="text-md text-gray-600"> {item?.variationName}</div>}
 
 
                                     <div className="flex items-center mt-2">

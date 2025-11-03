@@ -3,19 +3,21 @@ import React from "react";
 import { useCartStore}  from "@/store/cartStore";
 
 
-const AddToCart = ({product}:{product:any}) => {
+const AddToCartVariation = ({product,variation}:{product:any,variation:any}) => {
   const {addToCart} = useCartStore();
 
   const handleAdd = () => {
     addToCart({
-      id: product.id,
+      id: variation.id,
       name: product.name,
       slug: product.slug,
-      price: product.price,
-      regular_price: product.regular_price,
-      sale_price: product.sale_price,
-      images: product.images[0]?.src || "",
-      type: "simple"
+      price: variation.price,
+      regular_price: variation.regular_price,
+      sale_price: variation.sale_price,
+      images: variation?.image?.src || "",
+      type:"variable",
+      parentId: variation.parent_id,
+      variationName: variation.name
     });
   };
 
@@ -29,4 +31,4 @@ const AddToCart = ({product}:{product:any}) => {
   );
 };
 
-export default AddToCart;
+export default AddToCartVariation;

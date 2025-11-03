@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+
 interface WooProduct {
   id: number;
   name: string;
@@ -11,6 +12,9 @@ interface WooProduct {
   regular_price: string;
   sale_price: string;
   images: string;
+  type: string;
+  parentId? : string;
+  variationName? :string;
 }
 
 interface CartItem extends WooProduct {

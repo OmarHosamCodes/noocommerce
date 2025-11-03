@@ -21,7 +21,8 @@ export async function POST(req: NextRequest) {
 
     // Map cart items to WooCommerce order line_items
     const line_items = items.map((item: any) => ({
-      product_id: item.id,
+      product_id: +item.product_id,
+      variation_id: +item.variation_id,
       quantity: item.quantity,
     }));
 

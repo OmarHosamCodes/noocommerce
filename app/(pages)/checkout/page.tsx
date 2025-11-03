@@ -24,7 +24,7 @@ interface CheckoutFormData {
   paymentMethod: string;
 }
 
-const baseUrl =  process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const CheckoutPage = () => {
   const router = useRouter();
@@ -49,12 +49,15 @@ const CheckoutPage = () => {
     try {
       const orderData = {
         ...data,
-        items: orderItems.map((item) => ({
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-        })),
+        items: orderItems.map((item) => {
+          const isVariation =  item.type === "variable";
+          return {
+            product_id: isVariation ? item.parentId :item.id,
+            variation_id: isVariation && item.id,
+            quantity: item.quantity,
+
+          }
+        }),
         totals: {
           subtotal,
           shipping,
@@ -213,7 +216,8 @@ const CheckoutPage = () => {
                     </span>
                   </div>
                   <div className="flex-1">
-                    <span className="font-medium">{item.name}</span>
+                    <p className="font-medium">{item.name}</p>
+                    <p>{item.type === "variable" && item.variationName}</p>
                   </div>
                   <span>
                     {siteConfig.currency}{" "}
