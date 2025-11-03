@@ -1,8 +1,8 @@
 export const siteConfig = {
     currency : 'Rs.',
     logo: null,
-    logoName:"ZainMart",
-    title:"ZainMart",
+    logoName:"AshMart",
+    title:"AshMart",
     description:"Next js based wooCommerce storefront.",
     minItemPrice:0,
     maxItemPrice:10000,
