@@ -106,7 +106,7 @@ export default function ShopPage() {
                     { title: 'Home', href: '/' },
                     { title: 'Shop', href: '#' },
                 ]} />
-            <div className="container mx-auto px-4 pb-10">
+            <div className="container mx-auto px-4 pb-10 mt-4">
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <FilterShop />

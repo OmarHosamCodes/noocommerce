@@ -17,7 +17,7 @@ const ProductPage = async ({
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/products/${slug}`,
-    { cache: "no-store" }
+    // { cache: "no-store" }
   );
 
   if (!res.ok) {
@@ -25,7 +25,7 @@ const ProductPage = async ({
   }
 
   const product: WooProduct = await res.json();
-
+  console.log(product);
   return (
     <>
       <Breadcrumb
