@@ -18,6 +18,7 @@ import FilterShop from "@/components/shop/Filter";
 import Pagination from "@/components/shop/Pagination";
 import ProductGridSkeleton from "@/components/shop/ProductGridSkeleton";
 import VariableProductCard from "@/components/VariableProductCard";
+import MobileFilterMenu from "@/components/shop/MobileFilterMenu";
 
 const sortOptions = [
     { label: "Default", value: "rating" },
@@ -61,7 +62,7 @@ export default function ShopPage() {
                 orderby: sortBy.includes("price") ? "price" : "date",
                 order: sortBy.endsWith("desc") ? "desc" : "asc",
                 page: page.toString(),
-                per_page: "9",
+                per_page: "12",
             });
 
             const res = await fetch(`${baseUrl}/api/products?${params.toString()}`);
@@ -114,8 +115,9 @@ export default function ShopPage() {
                     {/* Main Content */}
                     <main className="md:col-span-3 space-y-4">
                         {/* Top Bar */}
-                        <div className="bg-white shadow-xs border border-gray-200 rounded-md px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-4">
-                            <p className="text-md text-gray-600">
+                        <div className="bg-white shadow-xs border border-gray-200 rounded-md px-2 md:px-4 py-3 flex flex-row justify-between items-center gap-2">
+                            <MobileFilterMenu />
+                            <p className="flex-1 text-md text-gray-600">
                                 Showing {products.length} of {totalProducts} products
                             </p>
 
@@ -123,7 +125,7 @@ export default function ShopPage() {
                                 onValueChange={(value) => updateParams({ sortBy: value, page: 1 })}
                                 defaultValue={sortBy}
                             >
-                                <SelectTrigger className="w-[200px] border border-gray-200 shadow-none">
+                                <SelectTrigger className="w-[100px] md:w-[200px] border border-gray-200 shadow-none">
                                     <SelectValue placeholder="Sort by" />
                                 </SelectTrigger>
                                 <SelectContent className="bg-white border border-gray-200 ">
@@ -140,7 +142,7 @@ export default function ShopPage() {
                         {loading ? (
                             <ProductGridSkeleton />
                         ) : products.length > 0 ? (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {products.map((product) => {
                                     if (product.type === "simple") {
                                         return <ProductCard key={product.id} product={product} />;
