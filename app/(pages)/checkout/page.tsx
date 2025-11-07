@@ -12,6 +12,7 @@ import { useCartStore } from "@/store/cartStore";
 import Image from "next/image";
 import { siteConfig } from "@/lib/config";
 import { useRouter } from "next/navigation";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 interface CheckoutFormData {
   firstName: string;
@@ -86,9 +87,15 @@ const CheckoutPage = () => {
   };
 
   return (
+    <>
+    
+                <Breadcrumb
+                    links={[
+                        { title: 'Home', href: '/' },
+                        { title: 'Checkout', href: '#' },
+                    ]} />
     <section className="checkout w-full bg-gray-50">
       <div className="container mx-auto px-6 py-12">
-        <h1 className="text-3xl font-bold mb-8">Checkout</h1>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -260,6 +267,8 @@ const CheckoutPage = () => {
         </form>
       </div>
     </section>
+    </>
+    
   );
 };
 

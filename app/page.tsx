@@ -10,6 +10,8 @@ export default async function Home() {
     next: { revalidate: 900 }, // ISR cache
   });
 
+  console.log(newArrivalsFetch);
+
   if (!newArrivalsFetch.ok) {
     throw new Error("Failed to fetch products");
   }
