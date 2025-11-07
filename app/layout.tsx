@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import "remixicon/fonts/remixicon.css";
 import Navbar from "@/components/Navbar";
 import TopLoader from "@/components/TopLoader";
+import { siteConfig } from "@/lib/config";
 
 
 const dmSans = DM_Sans({
@@ -15,8 +16,8 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Zain Mart",
-  description: "Building for the web.",
+  title: siteConfig.title,
+  description: siteConfig.description,
 };
 
 export default function RootLayout({
