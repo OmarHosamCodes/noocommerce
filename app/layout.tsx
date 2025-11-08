@@ -7,6 +7,7 @@ import "remixicon/fonts/remixicon.css";
 import Navbar from "@/components/Navbar";
 import TopLoader from "@/components/TopLoader";
 import { siteConfig } from "@/lib/config";
+import { Toaster } from 'react-hot-toast';
 
 
 const dmSans = DM_Sans({
@@ -33,6 +34,27 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <Toaster position="top-center"
+          toastOptions={{
+            success:{
+              duration: 2000,
+              icon: <i className="ri-check-line" />,
+              iconTheme:{
+                secondary: '#00f',
+                primary: '#fff'
+              },
+              style:{
+                background: 'fff',
+                color: '#1E2939',
+                padding:'10px 20px ',
+                border: '1px solid #E2E8F0',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+                borderRadius: '10px',
+                fontWeight: '500',
+              }
+
+            }
+          }} />
       </body>
     </html>
   );

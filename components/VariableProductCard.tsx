@@ -98,14 +98,14 @@ const VariableProductCard: React.FC<{ product: WooProduct }> = ({ product }) => 
         </div>
 
         {/* 🛒 Button */}
-        <div className="flex gap-2 pt-3">
+        {/* <div className="flex gap-2 pt-3">
           <Link
             href={`/products/${slug}`}
             className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-center"
           >
             <i className="ri-eye-line mr-2"></i> View Product
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

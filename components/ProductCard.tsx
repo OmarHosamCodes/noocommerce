@@ -99,9 +99,9 @@ const ProductCard: React.FC<{ product: WooProduct }> = ({ product }) => {
         </div>
 
         {/* 🛒 Add to Cart */}
-        <div className="flex gap-2 pt-3">
+        {/* <div className="flex gap-2 pt-3">
           <AddToCart product={product} />
-        </div>
+        </div> */}
       </div>
     </div>
   );

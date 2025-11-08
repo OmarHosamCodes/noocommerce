@@ -159,15 +159,30 @@ const VariableProductView = ({ product }: { product: WooProduct }) => {
 
 
 
-        <div
-          className="text-2xl font-medium text-gray-900 mb-3"
-          dangerouslySetInnerHTML={{
-            __html:
-              (siteConfig.currency + ' ' + selectedVariation?.price) ||
-              product.price_html ||
-              "<span>—</span>",
-          }}
-        />
+        <div className="text-2xl font-medium text-gray-900 mb-3">
+          {selectedVariation ? (
+            selectedVariation.on_sale ? (
+              <>
+                <span className="text-red-600">
+                  {siteConfig.currency} {selectedVariation.sale_price}
+                </span>{" "}
+                <span className="line-through text-gray-400">
+                  {siteConfig.currency} {selectedVariation.regular_price}
+                </span>
+              </>
+            ) : (
+              <span>
+                {siteConfig.currency} {selectedVariation.price}
+              </span>
+            )
+          ) : product?.price ? (
+            <span>
+              {siteConfig.currency} {product.price}
+            </span>
+          ) : (
+            <span>—</span>
+          )}
+        </div>
         <div>
 
         </div>
@@ -189,7 +204,7 @@ const VariableProductView = ({ product }: { product: WooProduct }) => {
           product.attributes?.map(
             (attr) =>
               attr.variation && (
-                <div key={attr.id} className="mb-5 mt-5 flex items-center gap-3">
+                <div key={attr.id} className="mb-5 mt-5r gap-3">
                   <label className="block text-md font-">
                     {attr.name}:
                   </label>

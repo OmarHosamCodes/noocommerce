@@ -20,14 +20,14 @@ const ProductDescription = ({ product }: { product: WooProduct }) => {
 
     return (
         <Tabs defaultValue="description" className="w-full min-h-[400px] pb-18">
-            <TabsList className='text-xl px-5 py-2 shadow-none bg-white w-full rounded-bottom'>
+            <TabsList className='text-sm md:text-xl px-5 py-2 shadow-none bg-white w-full rounded-bottom'>
                 <TabsTrigger value="description" className=''>Description</TabsTrigger>
                 <TabsTrigger value="additional">Additional Information</TabsTrigger>
                 <TabsTrigger value="reviews">Reviews</TabsTrigger>
             </TabsList>
             <TabsContent value="description">{
                 product.description && (
-                    <div className="mt-12">
+                    <div className="mt-12 px-4">
                         <div
                             className="prose prose-sm text-gray-700"
                             dangerouslySetInnerHTML={{ __html: product.description }}

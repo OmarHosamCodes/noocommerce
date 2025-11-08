@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useCartStore}  from "@/store/cartStore";
+import  toast  from "react-hot-toast";
 
 
 const AddToCart = ({product}:{product:any}) => {
@@ -17,6 +18,7 @@ const AddToCart = ({product}:{product:any}) => {
       images: product.images[0]?.src || "",
       type: "simple"
     });
+    toast.success("Product added to cart!");
   };
 
   return (

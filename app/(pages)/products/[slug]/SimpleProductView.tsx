@@ -1,6 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import AddToCart from "./AddtoCart";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { siteConfig } from "@/lib/config";
 
 // ✅ Types
 interface WooImage {
@@ -31,6 +34,7 @@ interface WooProduct {
   average_rating: string;
   rating_count: number;
   type: string;
+  sku: string;
   categories: WooCategory[];
   images: WooImage[];
 }
@@ -39,6 +43,7 @@ interface WooProduct {
 const SimpleProductView = async ({product}:{product:WooProduct}) => {
 
 
+  const rating = parseFloat(product.average_rating || "0");
   return (
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -76,50 +81,89 @@ const SimpleProductView = async ({product}:{product:WooProduct}) => {
 
         {/* ✅ Product Info */}
         <div>
-          <h1 className="text-3xl font-semibold mb-3">{product.name}</h1>
 
-          <div
-            className="text-xl font-medium text-blue-600 mb-2"
-            dangerouslySetInnerHTML={{ __html: product.price_html }}
-          />
+        {(product.on_sale) && (
+          <p className="text-sm text-green-600 mb-1 font-medium">On Sale 🎉</p>
+        )}
 
-          {product.on_sale && (
-            <p className="text-sm text-green-600 mb-2 font-medium">
-              On Sale 🎉
-            </p>
+        <h1 className="text-4xl font-semibold mb-1">{product.name}</h1>
+
+        <div className="flex gap-3 my-4">
+          {/* ⭐ Ratings */}
+          {product.rating_count >= 0 && (
+            <div className="flex items-center gap-1 text-md">
+              {[...Array(5)].map((_, i) => (
+                <i key={i} className={"ri-star-fill " + `${i < Math.round(rating)
+                  ? "fill-yellow-400 text-yellow-400"
+                  : "text-gray-300"
+                  }`}></i>
+
+              ))}
+              <span className="text-md text-gray-500 h-full flex items-center">
+                ({product.rating_count} Customer Reviews)
+              </span>
+            </div>
           )}
 
-          <p className="text-gray-600 mb-6">
-            {product.short_description.replace(/<[^>]*>?/gm, "")}
-          </p>
-          <AddToCart product={product} />
+          <div>
+            {product?.stock_status === "instock" ? <span className="text-blue-500"><i className="ri-checkbox-circle-line"></i> InStock</span> : <span className="text-red-500"><i className="ri-close-circle-line"></i> OutStock</span>}
+          </div>
 
+        </div>
+
+
+
+        <div
+          className="text-2xl font-medium text-gray-900 mb-3"
+          dangerouslySetInnerHTML={{
+            __html:
+              (siteConfig.currency + ' ' + product?.sale_price) ||
+              siteConfig.currency + ' ' + product?.regular_price ||
+              "<span>—</span>",
+          }}
+        />
+        <div>
+
+        </div>
+
+
+        {product.short_description && (
+          <div
+            className="text-sm"
+            dangerouslySetInnerHTML={{
+              __html: product.short_description
+
+            }}
+          />
+        )}
+
+        <Separator className="bg-gray-300 my-3 mt-6" />
+
+        {/* ✅ Add to Cart */}
+        {product?.stock_status === "instock" ? <AddToCart product={product}  /> : <Button className="bg-gray-300 border-gray-400 border px-5 py-2" disabled>Out of Stock</Button>}
+
+
+        <div className="mt-10 text-gray-500 text-md space-y-2">
+          <div className="">
+            SKU: {product?.sku || 'N/A'}
+          </div>
           {/* ✅ Categories */}
           {product.categories?.length > 0 && (
-            <div className="mt-6">
-              <h3 className="font-semibold mb-2">Categories:</h3>
-              <ul className="flex flex-wrap gap-2">
+            <div className="flex items-center mb-2">
+              <h3 className="">Categories:&nbsp;</h3>
+              <ul className="">
                 {product.categories.map((cat) => (
-                  <li
-                    key={cat.id}
-                    className="px-3 py-1 bg-gray-200 rounded-full text-sm"
-                  >
-                    {cat.name}
-                  </li>
+                  <span key={cat.id}>{cat.name}</span>
+
                 ))}
               </ul>
             </div>
           )}
-
-          {/* ✅ Description */}
-          <div className="mt-8">
-            <h3 className="text-lg font-semibold mb-2">Description</h3>
-            <div
-              className="prose prose-sm text-gray-700"
-              dangerouslySetInnerHTML={{ __html: product.description }}
-            />
-          </div>
         </div>
+
+
+
+      </div>
       </div>
   );
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import toast from "react-hot-toast";
 
 const Reviews = ({
     id,
@@ -53,19 +54,19 @@ const Reviews = ({
             const {review} = await res.json();
             setReviews((prev) => [review, ...prev]);
             setForm({ reviewer: "", reviewer_email: "", review: "", rating: 5 });
-            alert("Review submitted successfully!");
+            toast.success("Review submitted successfully!");
         } catch (error) {
             console.error("Error submitting review:", error);
-            alert("Something went wrong!");
+            toast.error("Failed to submit review. Please try again.");
         } finally {
             setSubmitting(false);
         }
     };
 
     return (
-        <div className="px-6 py-12 flex flex-col md:flex-row gap-8">
+        <div className="px-4 md:px-6 py-12 flex flex-col md:flex-row gap-8">
             {/* 📝 Reviews List */}
-            <div className="w-full md:w-1/2 max-h-[500px] overflow-y-scroll px-4">
+            <div className="w-full md:w-1/2 max-h-[500px] overflow-y-auto md:px-4">
                 <h2 className="text-xl font-medium mb-4">
                     {reviews.length} Review{reviews.length !== 1 && "s"} for this product
                 </h2>
@@ -155,9 +156,9 @@ const Reviews = ({
                             </div>
                         </div>
 
-                        <div className="flex gap-4">
+                        <div className="flex flex-col md:flex-row gap-4">
                             {/* 👤 Name */}
-                            <div className="w-1/2">
+                            <div className="w-full md:w-1/2">
                                 <label className="block text-gray-800 mb-1">
                                     Name<span className="text-red-500">*</span>
                                 </label>
@@ -172,7 +173,7 @@ const Reviews = ({
                             </div>
 
                             {/* 📧 Email */}
-                            <div className="w-1/2">
+                            <div className="w-full md:w-1/2">
                                 <label className="block text-gray-800 mb-1">
                                     Email<span className="text-red-500">*</span>
                                 </label>

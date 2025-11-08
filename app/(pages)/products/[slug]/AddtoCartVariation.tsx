@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useCartStore}  from "@/store/cartStore";
-
+import  toast  from "react-hot-toast";
 
 const AddToCartVariation = ({product,variation}:{product:any,variation:any}) => {
   const {addToCart} = useCartStore();
@@ -20,6 +20,8 @@ const AddToCartVariation = ({product,variation}:{product:any,variation:any}) => 
       parentId: variation.parent_id,
       variationName: variation.name
     });
+    
+    toast.success("Product added to cart!");
   };
 
   return (
