@@ -1,11 +1,11 @@
 "use client";
 
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/lib/config";
 import type { WooProduct } from "@/types/woo";
-import Image from "next/image";
-import { useEffect, useState } from "react";
 import AddToCartVariation from "./AddtoCartVariation";
 
 const VariableProductView = ({ product }: { product: WooProduct }) => {

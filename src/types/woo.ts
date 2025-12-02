@@ -153,3 +153,58 @@ export interface WooCategoryImage {
 	name: string;
 	alt: string;
 }
+
+export interface WooProductVariation {
+	id: number;
+	date_created: string;
+	date_created_gmt: string;
+	date_modified: string;
+	date_modified_gmt: string;
+	description: string;
+	permalink: string;
+	sku: string;
+	price: string;
+	regular_price: string;
+	sale_price: string;
+	on_sale: boolean;
+	purchasable: boolean;
+	virtual: boolean;
+	downloadable: boolean;
+	downloads: WooDownload[];
+	download_limit: number;
+	download_expiry: number;
+	tax_status: "taxable" | "shipping" | "none";
+	tax_class: string;
+	manage_stock: boolean;
+	stock_quantity: number | null;
+	stock_status: "instock" | "outofstock" | "onbackorder";
+	backorders: "no" | "notify" | "yes";
+	backorders_allowed: boolean;
+	backordered: boolean;
+	weight: string;
+	dimensions: WooDimensions;
+	shipping_class: string;
+	shipping_class_id: number;
+	image: WooImage;
+	attributes: WooAttribute[];
+	menu_order: number;
+	meta_data: WooMetaData[];
+}
+
+export interface WooProductReview {
+	id: number;
+	date_created: string;
+	date_created_gmt: string;
+	product_id: number;
+	status: string;
+	reviewer: string;
+	reviewer_email: string;
+	review: string;
+	rating: number;
+	verified: boolean;
+	reviewer_avatar_urls: {
+		24: string;
+		48: string;
+		96: string;
+	};
+}

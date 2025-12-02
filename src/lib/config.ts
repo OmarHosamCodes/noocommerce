@@ -1,9 +1,12 @@
+import { env } from "@/env";
+
 export const siteConfig = {
 	currency: "Rs.",
 	logo: null,
 	logoName: "AshMart",
 	title: "AshMart",
 	description: "Next js based wooCommerce storefront.",
+	url: env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
 	minItemPrice: 0,
 	maxItemPrice: 10000,
 };

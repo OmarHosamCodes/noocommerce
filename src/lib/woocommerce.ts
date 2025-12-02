@@ -1,5 +1,5 @@
-import { env } from "@/env";
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
+import { env } from "@/env";
 
 export const wcApi = new WooCommerceRestApi({
 	url: env.NEXT_PUBLIC_WOOCOMMERCE_URL,

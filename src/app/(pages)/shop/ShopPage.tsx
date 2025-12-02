@@ -1,5 +1,7 @@
 "use client";
 
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useMemo } from "react";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import ProductCard from "@/components/ProductCard";
 import FilterShop from "@/components/shop/Filter";
@@ -14,10 +16,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import VariableProductCard from "@/components/VariableProductCard";
-import { env } from "@/env";
-import type { WooProduct } from "@/types/woo";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useProducts } from "@/hooks/useApi";
 
 const sortOptions = [
 	{ label: "Default", value: "rating" },
@@ -26,17 +25,10 @@ const sortOptions = [
 	{ label: "Newest", value: "date" },
 ];
 
-const baseUrl = env.NEXT_PUBLIC_BASE_URL;
-
 export default function ShopPage() {
 	const router = useRouter();
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
-
-	const [products, setProducts] = useState<WooProduct[]>([]);
-	const [loading, setLoading] = useState(false);
-	const [totalPages, setTotalPages] = useState(1);
-	const [totalProducts, setTotalProducts] = useState(0);
 
 	// ✅ Read filters from URL
 	const selectedCategory = Number(searchParams.get("category")) || 0;
@@ -45,45 +37,28 @@ export default function ShopPage() {
 	const sortBy = searchParams.get("sortBy") || "date";
 	const page = Number(searchParams.get("page")) || 1;
 
-	const priceRange: [number, number] = [minPrice, maxPrice];
-
-	// 🧠 Fetch Categories
-
-	// 🧩 Fetch Products
-	const fetchProducts = async () => {
-		try {
-			setLoading(true);
-			const params = new URLSearchParams({
-				...(selectedCategory &&
-					selectedCategory !== 0 && { category: selectedCategory.toString() }),
-				minPrice: priceRange[0].toString(),
-				maxPrice: priceRange[1].toString(),
-				orderby: sortBy.includes("price") ? "price" : "date",
-				order: sortBy.endsWith("desc") ? "desc" : "asc",
-				page: page.toString(),
-				per_page: "12",
-			});
-
-			const res = await fetch(`${baseUrl}/api/products?${params.toString()}`);
-			const data = await res.json();
-
-			if (res.ok) {
-				setProducts(data.products || []);
-				setTotalPages(data.pagination?.totalPages || 1);
-				setTotalProducts(data.pagination?.total || 0);
-			} else {
-				console.error("Failed to fetch:", data.error);
-			}
-		} catch (err) {
-			console.error("Error fetching products:", err);
-		} finally {
-			setLoading(false);
+	// Build query params for React Query
+	const queryParams = useMemo(() => {
+		const params: Record<string, unknown> = {
+			minPrice,
+			maxPrice,
+			orderby: sortBy.includes("price") ? "price" : "date",
+			order: sortBy.endsWith("desc") ? "desc" : "asc",
+			page,
+			per_page: 12,
+		};
+		if (selectedCategory && selectedCategory !== 0) {
+			params.category = selectedCategory;
 		}
-	};
+		return params;
+	}, [selectedCategory, minPrice, maxPrice, sortBy, page]);
 
-	useEffect(() => {
-		fetchProducts();
-	}, [fetchProducts]);
+	// Use React Query hook
+	const { data, isLoading, error } = useProducts(queryParams);
+
+	const products = data?.products || [];
+	const totalPages = data?.pagination?.totalPages || 1;
+	const totalProducts = data?.pagination?.total || 0;
 
 	// ✅ Update URL parameters when user changes filter
 	const updateParams = (
@@ -136,8 +111,8 @@ export default function ShopPage() {
 									<SelectValue placeholder="Sort by" />
 								</SelectTrigger>
 								<SelectContent className="bg-white border border-gray-200 ">
-									{sortOptions.map((opt, id) => (
-										<SelectItem key={id} value={opt.value}>
+									{sortOptions.map((opt) => (
+										<SelectItem key={opt.value} value={opt.value}>
 											{opt.label}
 										</SelectItem>
 									))}
@@ -146,8 +121,12 @@ export default function ShopPage() {
 						</div>
 
 						{/* Products Grid */}
-						{loading ? (
+						{isLoading ? (
 							<ProductGridSkeleton />
+						) : error ? (
+							<div className="text-center py-20 text-red-500">
+								Failed to load products. Please try again.
+							</div>
 						) : products.length > 0 ? (
 							<div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 								{products.map((product) => {

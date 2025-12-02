@@ -1,24 +1,56 @@
-import CategorySlider from "@/components/home/CategorySlider";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import type { Metadata } from "next";
+import CategorySliderClient from "@/components/home/CategorySliderClient";
 import Hero from "@/components/home/Hero";
-import ProductsGallery from "@/components/home/ProductsGallery";
-import { getCategories, getNewArrivals, getTopSellings } from "@/lib/function";
+import ProductsGalleryClient from "@/components/home/ProductsGalleryClient";
+import { prefetchCategories, prefetchProducts } from "@/hooks/useApi";
+import { siteConfig } from "@/lib/config";
+import { getQueryClient } from "@/lib/queryClient";
 
-import type { WooProduct, WooProductCategory } from "@/types/woo";
 export const revalidate = 60;
 
+export const metadata: Metadata = {
+	title: "Home",
+	description: siteConfig.description,
+	openGraph: {
+		title: `Home | ${siteConfig.title}`,
+		description: siteConfig.description,
+		url: siteConfig.url,
+		siteName: siteConfig.title,
+		type: "website",
+	},
+};
+
 export default async function Home() {
-	const newArrivalsFetch: WooProduct[] = await getNewArrivals(4);
+	const queryClient = getQueryClient();
 
-	const bestSellings: WooProduct[] = await getTopSellings(4);
-
-	const categories: WooProductCategory[] = await getCategories();
+	// Prefetch data on the server
+	await Promise.all([
+		prefetchProducts(queryClient, {
+			orderby: "date",
+			order: "desc",
+			per_page: 4,
+		}),
+		prefetchProducts(queryClient, {
+			orderby: "popularity",
+			order: "desc",
+			per_page: 4,
+		}),
+		prefetchCategories(queryClient),
+	]);
 
 	return (
-		<>
+		<HydrationBoundary state={dehydrate(queryClient)}>
 			<Hero />
-			<CategorySlider categories={categories} />
-			<ProductsGallery products={newArrivalsFetch} name={"New Arrivals"} />
-			<ProductsGallery products={bestSellings} name={"Best Sellings"} />
-		</>
+			<CategorySliderClient />
+			<ProductsGalleryClient
+				name="New Arrivals"
+				initialParams={{ orderby: "date", order: "desc", per_page: 4 }}
+			/>
+			<ProductsGalleryClient
+				name="Best Sellings"
+				initialParams={{ orderby: "popularity", order: "desc", per_page: 4 }}
+			/>
+		</HydrationBoundary>
 	);
 }

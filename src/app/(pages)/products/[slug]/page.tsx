@@ -1,8 +1,8 @@
+import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { env } from "@/env";
 import { siteConfig } from "@/lib/config";
 import type { WooProduct } from "@/types/woo";
-import type { Metadata } from "next";
 import ProductDescription from "./ProductDescription";
 import SimpleProductView from "./SimpleProductView";
 import VariableProductView from "./VariableProductView";
@@ -67,7 +67,7 @@ const ProductPage = async ({
 	const slug = (await params).slug;
 
 	const res = await fetch(`${env.NEXT_PUBLIC_BASE_URL}/api/products/${slug}`, {
-		cache: "no-store",
+		next: { revalidate: 300 }, // Revalidate every 5 minutes
 	});
 
 	if (!res.ok) {
@@ -76,8 +76,45 @@ const ProductPage = async ({
 
 	const product: WooProduct = await res.json();
 
+	// Generate JSON-LD structured data for SEO
+	const jsonLd = {
+		"@context": "https://schema.org",
+		"@type": "Product",
+		name: product.name,
+		description:
+			product.short_description?.replace(/<[^>]*>?/gm, "") ||
+			product.description?.replace(/<[^>]*>?/gm, ""),
+		image: product.images?.map((img) => img.src) || [],
+		sku: product.sku,
+		offers: {
+			"@type": "Offer",
+			url: `${env.NEXT_PUBLIC_BASE_URL}/products/${product.slug}`,
+			priceCurrency: "USD",
+			price: product.price,
+			availability:
+				product.stock_status === "instock"
+					? "https://schema.org/InStock"
+					: "https://schema.org/OutOfStock",
+			seller: {
+				"@type": "Organization",
+				name: siteConfig.title,
+			},
+		},
+		aggregateRating: product.average_rating
+			? {
+					"@type": "AggregateRating",
+					ratingValue: product.average_rating,
+					reviewCount: product.rating_count,
+				}
+			: undefined,
+	};
+
 	return (
 		<>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+			/>
 			<Breadcrumb
 				links={[
 					{ title: "Home", href: "/" },
