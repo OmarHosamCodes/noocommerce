@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/lib/config";
+import Image from "next/image";
 import AddToCart from "./AddtoCart";
 
 // ✅ Types
@@ -89,7 +89,7 @@ const SimpleProductView = async ({ product }: { product: WooProduct }) => {
 						<div className="flex items-center gap-1 text-md">
 							{[...Array(5)].map((_, i) => (
 								<i
-									key={i}
+									key={i.toString()}
 									className={`ri-star-fill ${
 										i < Math.round(rating)
 											? "fill-yellow-400 text-yellow-400"

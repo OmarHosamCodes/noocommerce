@@ -90,7 +90,7 @@ const Reviews = ({
 									<div>
 										{[...Array(5)].map((_, i) => (
 											<i
-												key={i}
+												key={i.toString()}
 												className={`text-xl ri-star-fill ${
 													i < r.rating ? "text-yellow-500" : "text-gray-200"
 												}`}

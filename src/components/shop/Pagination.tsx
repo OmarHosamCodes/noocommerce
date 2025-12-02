@@ -74,12 +74,12 @@ const Pagination = ({ totalPages }: { totalPages: number }) => {
 				{/* Page Numbers */}
 				{getPageNumbers().map((num, i) =>
 					num === "..." ? (
-						<span key={i} className="px-2 text-gray-500 select-none">
+						<span key={i.toString()} className="px-2 text-gray-500 select-none">
 							...
 						</span>
 					) : (
 						<Button
-							key={i}
+							key={i.toString()}
 							onClick={() => updateParams({ page: num as number })}
 							className={
 								page === num

@@ -15,11 +15,14 @@ export function Breadcrumb({ links }: Props) {
 				<ul className=" flex items-center gap-x-3">
 					{links.map((link, index) => {
 						return link.href === "#" ? (
-							<li key={index}>
+							<li key={index.toString()}>
 								<span className="text-base text-blue-400">{link.title}</span>
 							</li>
 						) : (
-							<li key={index} className="inline-flex items-center gap-x-1">
+							<li
+								key={index.toString()}
+								className="inline-flex items-center gap-x-1"
+							>
 								<Link
 									prefetch={true}
 									className={twMerge(
