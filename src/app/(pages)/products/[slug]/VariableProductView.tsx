@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/lib/config";
 import type { WooProduct } from "@/types/woo";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import AddToCartVariation from "./AddtoCartVariation";
 
 const VariableProductView = ({ product }: { product: WooProduct }) => {
@@ -45,8 +45,8 @@ const VariableProductView = ({ product }: { product: WooProduct }) => {
 		// Create an object with first options
 		const defaultOptions: Record<string, string> = {};
 		product.attributes.forEach((attr) => {
-			if (attr.variation && attr.options?.length > 0) {
-				defaultOptions[attr.name] = attr.options[0];
+			if (attr.variation && attr.name && attr.options?.length > 0) {
+				defaultOptions[attr.name] = attr.options[0] || "";
 			}
 		});
 
