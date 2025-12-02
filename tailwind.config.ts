@@ -5,9 +5,14 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ["var(--font-almarai)", "var(--font-poppins)", "sans-serif"],
+				sans: ["var(--font-poppins)", "Inter", "system-ui", "sans-serif"],
+				serif: ["Georgia", "Playfair Display", "serif"],
+				heading: ["Georgia", "Playfair Display", "serif"],
 				almarai: ["var(--font-almarai)", "sans-serif"],
 				poppins: ["var(--font-poppins)", "sans-serif"],
+			},
+			backdropBlur: {
+				xs: "2px",
 			},
 		},
 	},

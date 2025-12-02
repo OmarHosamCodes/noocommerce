@@ -1,30 +1,46 @@
-import { Check } from "lucide-react";
 import type { Metadata } from "next";
 import { Almarai, Poppins } from "next/font/google";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "sonner";
+import DesktopNavbar from "@/components/DesktopNavbar";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import Navbar from "@/components/Navbar";
+import MobileBottomNav from "@/components/MobileBottomNav";
 import TopLoader from "@/components/TopLoader";
 import { siteConfig } from "@/lib/config";
-import QueryProvider from "@/providers/QueryProvider";
+import Providers from "@/providers/Providers";
 import "./globals.css";
 
 const almarai = Almarai({
+	weight: ["300", "400", "700", "800"],
 	subsets: ["arabic"],
 	variable: "--font-almarai",
-	weight: ["300", "400", "700", "800"],
 });
 
 const poppins = Poppins({
+	weight: ["300", "400", "500", "600", "700"],
 	subsets: ["latin"],
 	variable: "--font-poppins",
-	weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-	title: siteConfig.title,
+	title: {
+		default: siteConfig.title,
+		template: `%s | ${siteConfig.title}`,
+	},
 	description: siteConfig.description,
+	openGraph: {
+		type: "website",
+		locale: "en_US",
+		url: siteConfig.url,
+		title: siteConfig.title,
+		description: siteConfig.description,
+		siteName: siteConfig.title,
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: siteConfig.title,
+		description: siteConfig.description,
+	},
 };
 
 export default function RootLayout({
@@ -33,42 +49,17 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className={`${almarai.variable} ${poppins.variable}`}>
-			<body
-				className="font-sans antialiased"
-				style={{
-					fontFamily: "var(--font-almarai), var(--font-poppins), sans-serif",
-				}}
-			>
-				<QueryProvider>
+		<html lang="en" suppressHydrationWarning>
+			<body className={`${almarai.variable} ${poppins.variable} antialiased`}>
+				<Providers>
 					<TopLoader />
 					<Header />
-					<Navbar />
-					{children}
+					<DesktopNavbar />
+					<main className="min-h-screen pb-20 md:pb-0">{children}</main>
+					<MobileBottomNav />
 					<Footer />
-					<Toaster
-						position="top-center"
-						toastOptions={{
-							success: {
-								duration: 2000,
-								icon: <Check className="w-5 h-5" />,
-								iconTheme: {
-									secondary: "#00f",
-									primary: "#fff",
-								},
-								style: {
-									background: "fff",
-									color: "#1E2939",
-									padding: "10px 20px ",
-									border: "1px solid #E2E8F0",
-									boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-									borderRadius: "10px",
-									fontWeight: "500",
-								},
-							},
-						}}
-					/>
-				</QueryProvider>
+					<Toaster position="top-right" richColors />
+				</Providers>
 			</body>
 		</html>
 	);
