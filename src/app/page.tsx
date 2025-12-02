@@ -5,11 +5,13 @@ import { getNewArrivals, getTopSellings } from "@/lib/function";
 
 import type { WooProduct, WooProductCategory } from "@/types/woo";
 export const revalidate = 60;
+//TODO : remove in future
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
 	const newArrivalsFetch: WooProduct[] = await getNewArrivals(4);
 
-	const bestSellings: WooProduct[] = await await getTopSellings(4);
+	const bestSellings: WooProduct[] = await getTopSellings(4);
 
 	const categoriesFetch = await fetch(
 		`${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`,
@@ -18,11 +20,11 @@ export default async function Home() {
 		},
 	);
 
-	if (!categoriesFetch.ok) {
-		throw new Error("Failed to fetch categories");
-	}
+	let categories: WooProductCategory[] = [];
 
-	const categories: WooProductCategory[] = await categoriesFetch.json();
+	if (categoriesFetch.ok) {
+		categories = await categoriesFetch.json();
+	}
 
 	return (
 		<>

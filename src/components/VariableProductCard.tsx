@@ -1,9 +1,9 @@
 "use client";
-import { siteConfig } from "@/lib/config";
-import type { WooProduct } from "@/types/woo";
 import Image from "next/image";
 import Link from "next/link";
 import type React from "react";
+import { siteConfig } from "@/lib/config";
+import type { WooProduct } from "@/types/woo";
 
 const VariableProductCard: React.FC<{ product: WooProduct }> = ({
 	product,

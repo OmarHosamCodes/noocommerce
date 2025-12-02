@@ -1,3 +1,4 @@
+import "@/env";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -5,7 +6,7 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "slateblue-sheep-666523.hostingersite.com",
+				hostname: "primary-v2-b54a.up.railway.app",
 				port: "",
 				pathname: "/wp-content/uploads/**", // allow all images under this path
 			},
