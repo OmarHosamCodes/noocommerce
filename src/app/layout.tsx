@@ -1,13 +1,13 @@
+import { Check } from "lucide-react";
+import type { Metadata } from "next";
+import { Almarai, Poppins } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 import TopLoader from "@/components/TopLoader";
 import { siteConfig } from "@/lib/config";
 import QueryProvider from "@/providers/QueryProvider";
-import { Check } from "lucide-react";
-import type { Metadata } from "next";
-import { Almarai, Poppins } from "next/font/google";
-import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const almarai = Almarai({

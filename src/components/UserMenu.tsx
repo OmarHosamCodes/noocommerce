@@ -1,10 +1,10 @@
 "use client";
 
-import { useAuthStore } from "@/store/authStore";
 import { LogIn, LogOut, User, UserPlus } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useAuthStore } from "@/store/authStore";
 import { Button } from "./ui/button";
 
 export default function UserMenu() {

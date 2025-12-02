@@ -1,11 +1,11 @@
 "use client";
 
-import type { WooProductCategory } from "@/types/woo";
 import { ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type React from "react";
 import { useRef } from "react";
+import type { WooProductCategory } from "@/types/woo";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Autoplay, Navigation } from "swiper/modules";

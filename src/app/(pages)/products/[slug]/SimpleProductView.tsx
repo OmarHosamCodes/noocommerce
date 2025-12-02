@@ -1,8 +1,8 @@
+import { CheckCircle, Star, XCircle } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/lib/config";
-import { CheckCircle, Star, XCircle } from "lucide-react";
-import Image from "next/image";
 import AddToCart from "./AddtoCart";
 
 // ✅ Types

@@ -1,9 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { WooProductReview } from "@/types/woo";
-import Link from "next/link";
 
 interface ReviewsListProps {
 	reviews: WooProductReview[];

@@ -1,5 +1,8 @@
 "use client";
 
+import { Search } from "lucide-react";
+import Link from "next/link";
+import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -9,9 +12,6 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
-import Link from "next/link";
-import * as React from "react";
 
 export default function SearchDialog() {
 	const [query, setQuery] = React.useState("");

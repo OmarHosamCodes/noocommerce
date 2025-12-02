@@ -1,6 +1,6 @@
-import { wcApi } from "@/lib/woocommerce";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { wcApi } from "@/lib/woocommerce";
 
 export async function GET(request: NextRequest) {
 	try {
@@ -39,8 +39,8 @@ export async function GET(request: NextRequest) {
 
 		const { data, headers } = await wcApi.get("orders", {
 			customer: actualCustomerId,
-			page: Number.parseInt(page),
-			per_page: Number.parseInt(perPage),
+			page: Number.parseInt(page, 10),
+			per_page: Number.parseInt(perPage, 10),
 			orderby: "date",
 			order: "desc",
 		});

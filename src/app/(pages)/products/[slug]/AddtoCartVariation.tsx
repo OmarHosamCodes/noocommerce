@@ -1,7 +1,7 @@
 "use client";
-import { useCartStore } from "@/store/cartStore";
 import { ShoppingCart } from "lucide-react";
 import toast from "react-hot-toast";
+import { useCartStore } from "@/store/cartStore";
 
 const AddToCartVariation = ({
 	product,

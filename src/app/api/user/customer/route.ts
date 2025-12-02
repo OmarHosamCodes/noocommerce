@@ -1,6 +1,6 @@
-import { wcApi } from "@/lib/woocommerce";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { wcApi } from "@/lib/woocommerce";
 
 export async function GET(request: NextRequest) {
 	try {
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
 			);
 		}
 
-		let data;
+		let data: unknown;
 		if (email) {
 			// Search for customer by email
 			const { data: customers } = await wcApi.get("customers", {

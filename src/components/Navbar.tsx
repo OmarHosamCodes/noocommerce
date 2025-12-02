@@ -1,9 +1,9 @@
 "use client";
 
-import { navItems, siteConfig } from "@/lib/config";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { navItems, siteConfig } from "@/lib/config";
 import CartSlider from "./CartSlider";
 import MobileMenu from "./MobileMenu";
 import SearchDialog from "./SearchDialog";

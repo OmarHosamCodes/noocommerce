@@ -1,10 +1,10 @@
 "use client";
-import { siteConfig } from "@/lib/config";
-import type { WooProduct } from "@/types/woo";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type React from "react";
+import { siteConfig } from "@/lib/config";
+import type { WooProduct } from "@/types/woo";
 
 const ProductCard: React.FC<{ product: WooProduct }> = ({ product }) => {
 	const {

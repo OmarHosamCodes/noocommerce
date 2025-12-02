@@ -1,5 +1,5 @@
-import { env } from "@/env";
 import axios from "axios";
+import { env } from "@/env";
 
 export const apiClient = axios.create({
 	baseURL: env.NEXT_PUBLIC_BASE_URL,

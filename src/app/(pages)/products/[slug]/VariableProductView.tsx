@@ -1,12 +1,12 @@
 "use client";
 
+import { CheckCircle, Star, XCircle } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/lib/config";
 import type { WooProduct, WooProductVariation } from "@/types/woo";
-import { CheckCircle, Star, XCircle } from "lucide-react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
 import AddToCartVariation from "./AddtoCartVariation";
 
 const VariableProductView = ({ product }: { product: WooProduct }) => {

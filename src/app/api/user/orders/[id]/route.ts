@@ -1,5 +1,5 @@
-import { wcApi } from "@/lib/woocommerce";
 import { NextResponse } from "next/server";
+import { wcApi } from "@/lib/woocommerce";
 
 export async function GET(
 	_request: Request,

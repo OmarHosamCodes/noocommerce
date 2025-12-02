@@ -1,13 +1,11 @@
 "use client";
+import { SlidersHorizontal, X } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { env } from "@/env";
 import { siteConfig } from "@/lib/config";
 import { cn } from "@/lib/utils";
 import type { WooProductCategory } from "@/types/woo";
-import { SlidersHorizontal, X } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Skeleton } from "../ui/skeleton";
-import { Slider } from "../ui/slider";
 import { Button } from "./../ui/button";
 import {
 	Sheet,
@@ -16,6 +14,8 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "./../ui/sheet";
+import { Skeleton } from "../ui/skeleton";
+import { Slider } from "../ui/slider";
 
 const baseUrl = env.NEXT_PUBLIC_BASE_URL;
 

@@ -1,9 +1,9 @@
 "use client";
 
-import { useAuthStore } from "@/store/authStore";
 import { Star, User } from "lucide-react";
 import React from "react";
 import toast from "react-hot-toast";
+import { useAuthStore } from "@/store/authStore";
 
 const Reviews = ({
 	id,

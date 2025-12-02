@@ -1,5 +1,8 @@
 "use client";
 
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { toast } from "sonner";
 import { AddressManager } from "@/components/profile/AddressManager";
 import { OrdersList } from "@/components/profile/OrdersList";
 import { ReviewsList } from "@/components/profile/ReviewsList";
@@ -10,9 +13,6 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuthStore } from "@/store/authStore";
 import type { WooCustomer, WooOrder, WooProductReview } from "@/types/woo";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import { toast } from "sonner";
 
 export default function ProfilePage() {
 	const { user } = useAuthStore();
