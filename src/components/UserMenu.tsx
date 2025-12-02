@@ -38,6 +38,15 @@ export default function UserMenu() {
 						</p>
 						<p className="text-xs text-gray-500 truncate">{user.email}</p>
 					</div>
+					<Link
+						href="/profile"
+						className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+					>
+						<div className="flex items-center gap-2">
+							<User className="w-4 h-4" />
+							My Profile
+						</div>
+					</Link>
 					<button
 						type="button"
 						onClick={handleLogout}
