@@ -1,14 +1,15 @@
 "use client";
 
-import type React from "react";
-import { useRef } from "react";
-import { Autoplay, Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
+import type { WooProductCategory } from "@/types/woo";
+import { ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { WooProductCategory } from "@/types/woo";
+import type React from "react";
+import { useRef } from "react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Autoplay, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 interface CategorySliderProps {
 	categories: WooProductCategory[];
@@ -27,16 +28,18 @@ const CategorySlider: React.FC<CategorySliderProps> = ({ categories }) => {
 
 				<div className="flex gap-2">
 					<button
+						type="button"
 						onClick={() => swiperRef.current?.slidePrev()}
 						className="p-2 px-3 bg-white border-gray-200 border hover:bg-blue-50 transition"
 					>
-						<i className="ri-arrow-left-s-line text-xl"></i>
+						<ChevronLeft className="w-5 h-5" />
 					</button>
 					<button
+						type="button"
 						onClick={() => swiperRef.current?.slideNext()}
 						className="p-2 px-3 bg-white border-gray-200 border hover:bg-blue-50 transition"
 					>
-						<i className="ri-arrow-right-s-line text-xl"></i>
+						<ChevronRight className="w-5 h-5" />
 					</button>
 				</div>
 			</div>
@@ -78,7 +81,7 @@ const CategorySlider: React.FC<CategorySliderProps> = ({ categories }) => {
 									</div>
 								) : (
 									<div className="w-[120px] h-[120px] bg-gray-100 rounded-full flex items-center justify-center">
-										<i className="ri-image-2-line text-gray-400 text-3xl"></i>
+										<ImageIcon className="w-8 h-8 text-gray-400" />
 									</div>
 								)}
 								<p className="mt-3 text-gray-700 font-medium text-center text-sm">

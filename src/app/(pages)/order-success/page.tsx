@@ -1,14 +1,15 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { CheckCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const OrderSuccessPage = () => {
 	const router = useRouter();
 
 	return (
 		<div className="min-h-[80vh] flex flex-col justify-center items-center text-center px-4">
-			<i className="ri-checkbox-circle-line text-blue-500 text-9xl"></i>
+			<CheckCircle className="text-blue-500 w-36 h-36 mb-4" />
 			<h1 className="text-3xl font-bold mb-3">Order Placed Successfully!</h1>
 			<p className="text-gray-600 max-w-md mb-8">
 				Thank you for your purchase. We’ve received your order and it’s being

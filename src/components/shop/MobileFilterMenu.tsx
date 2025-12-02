@@ -1,10 +1,13 @@
 "use client";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import { env } from "@/env";
 import { siteConfig } from "@/lib/config";
 import { cn } from "@/lib/utils";
 import type { WooProductCategory } from "@/types/woo";
+import { SlidersHorizontal, X } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Skeleton } from "../ui/skeleton";
+import { Slider } from "../ui/slider";
 import { Button } from "./../ui/button";
 import {
 	Sheet,
@@ -13,8 +16,6 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "./../ui/sheet";
-import { Skeleton } from "../ui/skeleton";
-import { Slider } from "../ui/slider";
 
 const baseUrl = env.NEXT_PUBLIC_BASE_URL;
 
@@ -67,7 +68,7 @@ const MobileFilterMenu = () => {
 			<Sheet>
 				<SheetTrigger asChild>
 					<Button variant="ghost" size="icon">
-						<i className="text-2xl ri-equalizer-2-line"></i>
+						<SlidersHorizontal className="w-6 h-6" />
 					</Button>
 				</SheetTrigger>
 
@@ -75,8 +76,8 @@ const MobileFilterMenu = () => {
 					<div className="flex items-center justify-between p-4 transition-transform duration-300 border-b border-gray-200">
 						<SheetTitle>Filter</SheetTitle>
 						<SheetClose asChild>
-							<button>
-								<i className="text-2xl ri-close-line"></i>
+							<button type="button">
+								<X className="w-6 h-6" />
 							</button>
 						</SheetClose>
 					</div>

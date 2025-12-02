@@ -1,9 +1,10 @@
 "use client";
+import { siteConfig } from "@/lib/config";
+import type { WooProduct } from "@/types/woo";
+import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type React from "react";
-import { siteConfig } from "@/lib/config";
-import type { WooProduct } from "@/types/woo";
 
 const ProductCard: React.FC<{ product: WooProduct }> = ({ product }) => {
 	const {
@@ -66,14 +67,14 @@ const ProductCard: React.FC<{ product: WooProduct }> = ({ product }) => {
 				{rating_count >= 0 && (
 					<div className="flex items-center gap-1 text-xs">
 						{[...Array(5)].map((_, i) => (
-							<i
+							<Star
 								key={i.toString()}
-								className={`ri-star-fill ${
+								className={`w-4 h-4 ${
 									i < Math.round(rating)
 										? "fill-yellow-400 text-yellow-400"
 										: "text-gray-300"
 								}`}
-							></i>
+							/>
 						))}
 						<span className="text-xs text-gray-500 h-full flex items-center">
 							({rating_count})

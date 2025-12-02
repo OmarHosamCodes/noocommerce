@@ -1,4 +1,5 @@
 "use client";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import {
@@ -22,7 +23,7 @@ const MobileMenu = () => {
 			<Sheet>
 				<SheetTrigger asChild>
 					<Button variant="ghost" size="icon">
-						<i className="ri-menu-line text-2xl"></i>
+						<Menu className="w-6 h-6" />
 					</Button>
 				</SheetTrigger>
 
@@ -32,8 +33,8 @@ const MobileMenu = () => {
 							Zain<span className="text-blue-400">Mart</span>
 						</SheetTitle>
 						<SheetClose asChild>
-							<button>
-								<i className="ri-close-line text-2xl"></i>
+							<button type="button">
+								<X className="w-6 h-6" />
 							</button>
 						</SheetClose>
 					</div>

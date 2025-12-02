@@ -1,7 +1,8 @@
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/lib/config";
+import { CheckCircle, Star, XCircle } from "lucide-react";
+import Image from "next/image";
 import AddToCart from "./AddtoCart";
 
 // ✅ Types
@@ -88,14 +89,14 @@ const SimpleProductView = async ({ product }: { product: WooProduct }) => {
 					{product.rating_count >= 0 && (
 						<div className="flex items-center gap-1 text-md">
 							{[...Array(5)].map((_, i) => (
-								<i
+								<Star
 									key={i.toString()}
-									className={`ri-star-fill ${
+									className={`w-4 h-4 ${
 										i < Math.round(rating)
 											? "fill-yellow-400 text-yellow-400"
 											: "text-gray-300"
 									}`}
-								></i>
+								/>
 							))}
 							<span className="text-md text-gray-500 h-full flex items-center">
 								({product.rating_count} Customer Reviews)
@@ -105,12 +106,12 @@ const SimpleProductView = async ({ product }: { product: WooProduct }) => {
 
 					<div>
 						{product?.stock_status === "instock" ? (
-							<span className="text-blue-500">
-								<i className="ri-checkbox-circle-line"></i> InStock
+							<span className="text-blue-500 flex items-center gap-1">
+								<CheckCircle className="w-4 h-4" /> InStock
 							</span>
 						) : (
-							<span className="text-red-500">
-								<i className="ri-close-circle-line"></i> OutStock
+							<span className="text-red-500 flex items-center gap-1">
+								<XCircle className="w-4 h-4" /> OutStock
 							</span>
 						)}
 					</div>

@@ -1,9 +1,9 @@
 "use client";
 
-import { Minus, Plus, Trash } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Minus, Plus, ShoppingCart, Trash, X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 
 // shadcn/ui Sheet components (adjust paths if your project uses a different import)
 import {
@@ -38,7 +38,7 @@ export default function CartSlider() {
 					size="icon"
 					className="relative hover:text-blue-600 cursor-pointer"
 				>
-					<i className="ri-shopping-cart-line text-xl"></i>{" "}
+					<ShoppingCart className="w-5 h-5" />
 					{cart.length > 0 && (
 						<span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1.5">
 							{cart.length}
@@ -56,8 +56,8 @@ export default function CartSlider() {
 						<SheetTitle className="font-medium text-2xl ">Your Cart</SheetTitle>
 					</SheetHeader>
 					<SheetClose asChild id="cart-close">
-						<button>
-							<i className="ri-close-line text-3xl"></i>
+						<button type="button">
+							<X className="w-7 h-7" />
 						</button>
 					</SheetClose>
 				</div>

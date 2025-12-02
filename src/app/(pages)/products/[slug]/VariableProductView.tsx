@@ -1,11 +1,12 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/lib/config";
-import type { WooProduct } from "@/types/woo";
+import type { WooProduct, WooProductVariation } from "@/types/woo";
+import { CheckCircle, Star, XCircle } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import AddToCartVariation from "./AddtoCartVariation";
 
 const VariableProductView = ({ product }: { product: WooProduct }) => {
@@ -18,8 +19,11 @@ const VariableProductView = ({ product }: { product: WooProduct }) => {
 	const [selectedOptions, setSelectedOptions] = useState<
 		Record<string, string>
 	>({});
-	const [selectedVariation, setSelectedVariation] = useState<any>(null);
-	const [productVariations, setProductVariations] = useState<any[]>([]);
+	const [selectedVariation, setSelectedVariation] =
+		useState<WooProductVariation | null>(null);
+	const [productVariations, setProductVariations] = useState<
+		WooProductVariation[]
+	>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 
 	// ✅ Fetch product variations dynamically
@@ -72,9 +76,9 @@ const VariableProductView = ({ product }: { product: WooProduct }) => {
 				.replace(/[\u0300-\u036f]/g, "") // remove accents
 				.replace(/[\s+]+/g, "-"); // replace spaces and '+' with '-'
 
-		const matched = productVariations.find((variation: any) =>
+		const matched = productVariations.find((variation) =>
 			Object.entries(selectedOptions).every(([attr, val]) =>
-				(variation.attributes || []).some((a: any) => {
+				(variation.attributes || []).some((a) => {
 					const attrName = normalize(a.name);
 					const selectedAttr = normalize(attr);
 					const optionVal = normalize(a.option);
@@ -138,14 +142,14 @@ const VariableProductView = ({ product }: { product: WooProduct }) => {
 					{product.rating_count >= 0 && (
 						<div className="flex items-center gap-1 text-md">
 							{[...Array(5)].map((_, i) => (
-								<i
+								<Star
 									key={i.toString()}
-									className={`ri-star-fill ${
+									className={`w-4 h-4 ${
 										i < Math.round(rating)
 											? "fill-yellow-400 text-yellow-400"
 											: "text-gray-300"
 									}`}
-								></i>
+								/>
 							))}
 							<span className="text-md text-gray-500 h-full flex items-center">
 								({product.rating_count} Customer Reviews)
@@ -155,12 +159,12 @@ const VariableProductView = ({ product }: { product: WooProduct }) => {
 
 					<div>
 						{selectedVariation?.stock_status === "instock" ? (
-							<span className="text-blue-500">
-								<i className="ri-checkbox-circle-line"></i> InStock
+							<span className="text-blue-500 flex items-center gap-1">
+								<CheckCircle className="w-4 h-4" /> InStock
 							</span>
 						) : (
-							<span className="text-red-500">
-								<i className="ri-close-circle-line"></i> OutStock
+							<span className="text-red-500 flex items-center gap-1">
+								<XCircle className="w-4 h-4" /> OutStock
 							</span>
 						)}
 					</div>
@@ -192,14 +196,7 @@ const VariableProductView = ({ product }: { product: WooProduct }) => {
 				</div>
 				<div></div>
 
-				{description && (
-					<div
-						className="text-sm"
-						dangerouslySetInnerHTML={{
-							__html: description,
-						}}
-					/>
-				)}
+				{description && <div className="text-sm">{description}</div>}
 
 				<Separator className="bg-gray-300 my-3 mt-6" />
 				{/* ✅ Variation Radio Buttons */}
@@ -208,7 +205,7 @@ const VariableProductView = ({ product }: { product: WooProduct }) => {
 						(attr) =>
 							attr.variation && (
 								<div key={attr.id} className="mb-5 mt-5r gap-3">
-									<label className="block text-md font-">{attr.name}:</label>
+									<div className="block text-md font-medium">{attr.name}:</div>
 									<div className="flex flex-wrap gap-3">
 										{attr.options.map((opt: string) => {
 											const isSelected = selectedOptions[attr.name] === opt;

@@ -1,9 +1,9 @@
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import { env } from "@/env";
 import { siteConfig } from "@/lib/config";
 import { cn } from "@/lib/utils";
 import type { WooProductCategory } from "@/types/woo";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
 import { Slider } from "../ui/slider";
 
@@ -79,6 +79,7 @@ const FilterShop = () => {
 					{categories.map((cat) => (
 						<li key={cat.id || "all"}>
 							<button
+								type="button"
 								onClick={() => updateParams({ category: cat.id, page: 1 })}
 								className={cn(
 									"w-full text-left px-3 py-2 rounded-md transition flex justify-between items-center",

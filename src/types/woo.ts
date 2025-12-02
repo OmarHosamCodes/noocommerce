@@ -125,6 +125,12 @@ export interface WooDefaultAttribute {
 	option: string;
 }
 
+export interface WooVariationAttribute {
+	id: number;
+	name: string;
+	option: string;
+}
+
 export interface WooMetaData {
 	id: number;
 	key: string;
@@ -186,7 +192,7 @@ export interface WooProductVariation {
 	shipping_class: string;
 	shipping_class_id: number;
 	image: WooImage;
-	attributes: WooAttribute[];
+	attributes: WooVariationAttribute[];
 	menu_order: number;
 	meta_data: WooMetaData[];
 }

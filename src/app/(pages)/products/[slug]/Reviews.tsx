@@ -1,5 +1,6 @@
 "use client";
 
+import { Star, User } from "lucide-react";
 import React from "react";
 import toast from "react-hot-toast";
 
@@ -81,20 +82,22 @@ const Reviews = ({
 								<div className="w-full flex justify-between">
 									<div className="flex items-center gap-4">
 										<div className="w-8 h-8 bg-gray-300 rounded-full text-lg flex items-center justify-center text-white">
-											<i className="ri-user-fill"></i>
+											<User className="w-5 h-5" />
 										</div>
 										<p className="font-medium capitalize text-lg">
 											{r.reviewer}
 										</p>
 									</div>
-									<div>
+									<div className="flex gap-0.5">
 										{[...Array(5)].map((_, i) => (
-											<i
+											<Star
 												key={i.toString()}
-												className={`text-xl ri-star-fill ${
-													i < r.rating ? "text-yellow-500" : "text-gray-200"
+												className={`w-5 h-5 ${
+													i < r.rating
+														? "fill-yellow-500 text-yellow-500"
+														: "text-gray-200"
 												}`}
-											></i>
+											/>
 										))}
 									</div>
 								</div>
@@ -133,11 +136,13 @@ const Reviews = ({
 										onChange={() => setForm({ ...form, rating: star })}
 										className="hidden"
 									/>
-									<i
-										className={`ri-star-fill text-2xl cursor-pointer transition ${
-											star <= form.rating ? "text-yellow-500" : "text-gray-300"
+									<Star
+										className={`w-6 h-6 cursor-pointer transition ${
+											star <= form.rating
+												? "fill-yellow-500 text-yellow-500"
+												: "text-gray-300"
 										}`}
-									></i>
+									/>
 								</label>
 							))}
 						</div>

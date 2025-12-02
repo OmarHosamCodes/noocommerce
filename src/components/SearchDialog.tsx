@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -11,6 +9,9 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import Link from "next/link";
+import * as React from "react";
 
 export default function SearchDialog() {
 	const [query, setQuery] = React.useState("");
@@ -50,7 +51,7 @@ export default function SearchDialog() {
 			{/* 🔍 Trigger Button */}
 			<DialogTrigger asChild>
 				<Button variant="ghost" size="icon">
-					<i className="ri-search-line text-xl"></i>
+					<Search className="w-5 h-5" />
 				</Button>
 			</DialogTrigger>
 
@@ -61,7 +62,7 @@ export default function SearchDialog() {
 				{/* 🔹 Header */}
 				<DialogHeader className="p-6 border-b border-gray-300">
 					<div className="flex items-center border border-gray-300 rounded-md px-3 py-2 text-lg">
-						<i className="ri-search-line text-lg text-gray-500"></i>
+						<Search className="w-5 h-5 text-gray-500" />
 						<Input
 							placeholder="Search for products..."
 							value={query}

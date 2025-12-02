@@ -1,9 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +10,10 @@ import { Separator } from "@/components/ui/separator";
 import { env } from "@/env";
 import { siteConfig } from "@/lib/config";
 import { useCartStore } from "@/store/cartStore";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 interface CheckoutFormData {
 	firstName: string;
@@ -175,11 +175,14 @@ const CheckoutPage = () => {
 								<CardContent>
 									<RadioGroup
 										defaultValue="cod"
-										onValueChange={(val) =>
-											(document.querySelector<HTMLInputElement>(
+										onValueChange={(val) => {
+											const input = document.querySelector<HTMLInputElement>(
 												"input[name='paymentMethod']",
-											)!.value = val)
-										}
+											);
+											if (input) {
+												input.value = val;
+											}
+										}}
 									>
 										<div className="flex items-center space-x-3">
 											<RadioGroupItem

@@ -1,19 +1,25 @@
-import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
-import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 import TopLoader from "@/components/TopLoader";
 import { siteConfig } from "@/lib/config";
 import QueryProvider from "@/providers/QueryProvider";
-import "remixicon/fonts/remixicon.css";
+import { Check } from "lucide-react";
+import type { Metadata } from "next";
+import { Almarai, Poppins } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
-const dmSans = DM_Sans({
+const almarai = Almarai({
+	subsets: ["arabic"],
+	variable: "--font-almarai",
+	weight: ["300", "400", "700", "800"],
+});
+
+const poppins = Poppins({
 	subsets: ["latin"],
-	variable: "--font-dm-sans",
-	weight: ["400", "500", "700"], // optional: choose weights you’ll use
+	variable: "--font-poppins",
+	weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -27,8 +33,13 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className={dmSans.variable}>
-			<body className="font-sans antialiased">
+		<html lang="en" className={`${almarai.variable} ${poppins.variable}`}>
+			<body
+				className="font-sans antialiased"
+				style={{
+					fontFamily: "var(--font-almarai), var(--font-poppins), sans-serif",
+				}}
+			>
 				<QueryProvider>
 					<TopLoader />
 					<Header />
@@ -40,7 +51,7 @@ export default function RootLayout({
 						toastOptions={{
 							success: {
 								duration: 2000,
-								icon: <i className="ri-check-line" />,
+								icon: <Check className="w-5 h-5" />,
 								iconTheme: {
 									secondary: "#00f",
 									primary: "#fff",

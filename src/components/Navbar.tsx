@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import "remixicon/fonts/remixicon.css";
-import Image from "next/image";
 import { navItems, siteConfig } from "@/lib/config";
 import { useCartStore } from "@/store/cartStore";
+import { ChevronDown } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import CartSlider from "./CartSlider";
 import MobileMenu from "./MobileMenu";
 import SearchDialog from "./SearchDialog";
@@ -39,11 +39,13 @@ export default function Navbar() {
 						<div key={item.name} className="relative group">
 							{item.dropdown && item.dropdown.length > 0 ? (
 								<>
-									<button className="text-gray-700 font-medium hover:text-blue-600 transition flex items-center gap-1">
+									<button
+										type="button"
+										className="text-gray-700 font-medium hover:text-blue-600 transition flex items-center gap-1"
+									>
 										{item.name}
-										<i className="ri-arrow-down-s-line text-lg"></i>
-									</button>
-
+										<ChevronDown className="w-4 h-4" />
+									</button>{" "}
 									{/* Dropdown */}
 									<div
 										className="absolute left-1/2 -translate-x-1/2 mt-0 hidden group-hover:block
