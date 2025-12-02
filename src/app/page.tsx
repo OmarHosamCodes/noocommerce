@@ -6,8 +6,6 @@ import { getNewArrivals, getTopSellings } from "@/lib/function";
 
 import type { WooProduct, WooProductCategory } from "@/types/woo";
 export const revalidate = 60;
-//TODO : remove in future
-export const dynamic = "force-dynamic";
 
 export default async function Home() {
 	const newArrivalsFetch: WooProduct[] = await getNewArrivals(4);
