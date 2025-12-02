@@ -1,8 +1,5 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import { toast } from "sonner";
 import { AddressManager } from "@/components/profile/AddressManager";
 import { OrdersList } from "@/components/profile/OrdersList";
 import { ReviewsList } from "@/components/profile/ReviewsList";
@@ -13,6 +10,9 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuthStore } from "@/store/authStore";
 import type { WooCustomer, WooOrder, WooProductReview } from "@/types/woo";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function ProfilePage() {
 	const { user } = useAuthStore();
@@ -101,12 +101,43 @@ export default function ProfilePage() {
 
 	if (!user) {
 		return (
-			<div className="container mx-auto py-10">
+			<div className="container mx-auto py-10 max-w-md">
 				<Card>
-					<CardContent className="py-10">
-						<p className="text-center text-muted-foreground">
-							Please log in to view your profile
+					<CardHeader className="text-center space-y-2">
+						<div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+							<svg
+								className="w-8 h-8 text-primary"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+							>
+								<title>User Icon</title>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth={2}
+									d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+								/>
+							</svg>
+						</div>
+						<CardTitle className="text-2xl">Sign in to continue</CardTitle>
+						<p className="text-muted-foreground">
+							Access your profile, orders, and saved addresses
 						</p>
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<Button className="w-full" size="lg" asChild>
+							<a href="/login">Sign in</a>
+						</Button>
+						<div className="text-center text-sm text-muted-foreground">
+							Don't have an account?{" "}
+							<a
+								href="/register"
+								className="text-primary hover:underline font-medium"
+							>
+								Sign up
+							</a>
+						</div>
 					</CardContent>
 				</Card>
 			</div>

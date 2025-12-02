@@ -1,8 +1,9 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/cartStore";
 import { Home, Search, ShoppingCart, User } from "lucide-react";
-import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -13,18 +14,14 @@ const MobileBottomNav = () => {
 
 	const navItems = [
 		{ href: "/", icon: Home, label: "Home" },
-		{ href: "/shop", icon: Search, label: "Search" },
-		{ href: "/cart", icon: ShoppingCart, label: "Cart", badge: cartCount },
+		{ href: "/shop", icon: Search, label: "Shop" },
+		{ href: "/checkout", icon: ShoppingCart, label: "Cart", badge: cartCount },
 		{ href: "/profile", icon: User, label: "Account" },
 	];
 
 	return (
-		<motion.nav
-			initial={{ y: 100 }}
-			animate={{ y: 0 }}
-			className="fixed bottom-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-t border-gray-200 md:hidden"
-		>
-			<div className="flex justify-around items-center h-16 px-4">
+		<nav className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-t md:hidden">
+			<div className="flex justify-around items-center h-16 px-2 safe-area-bottom">
 				{navItems.map((item) => {
 					const isActive = pathname === item.href;
 					const Icon = item.icon;
@@ -33,36 +30,28 @@ const MobileBottomNav = () => {
 						<Link
 							key={item.href}
 							href={item.href}
-							className="relative flex flex-col items-center justify-center flex-1 h-full"
+							className={cn(
+								"relative flex flex-col items-center justify-center flex-1 h-full transition-colors",
+								isActive ? "text-primary" : "text-muted-foreground",
+							)}
 						>
-							<motion.div whileTap={{ scale: 0.9 }} className="relative">
-								<Icon
-									className={`w-6 h-6 ${
-										isActive ? "text-blue-600" : "text-gray-600"
-									}`}
-								/>
+							<div className="relative">
+								<Icon className="w-5 h-5" />
 								{item.badge && item.badge > 0 && (
-									<motion.span
-										initial={{ scale: 0 }}
-										animate={{ scale: 1 }}
-										className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium"
+									<Badge
+										variant="destructive"
+										className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
 									>
-										{item.badge}
-									</motion.span>
+										{item.badge > 99 ? "99+" : item.badge}
+									</Badge>
 								)}
-							</motion.div>
-							<span
-								className={`text-xs mt-1 ${
-									isActive ? "text-blue-600 font-medium" : "text-gray-600"
-								}`}
-							>
-								{item.label}
-							</span>
+							</div>
+							<span className="text-xs mt-1 font-medium">{item.label}</span>
 						</Link>
 					);
 				})}
 			</div>
-		</motion.nav>
+		</nav>
 	);
 };
 

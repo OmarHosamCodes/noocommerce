@@ -1,10 +1,20 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { siteConfig } from "@/lib/config";
-import { CheckCircle, Heart, ShoppingCart, Star, XCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+	CheckCircle,
+	Heart,
+	Package,
+	ShoppingCart,
+	Star,
+	TruckIcon,
+	XCircle,
+} from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { useState } from "react";
@@ -53,21 +63,21 @@ const EnhancedProductView = ({ product }: { product: WooProduct }) => {
 	};
 
 	return (
-		<div className="container mx-auto px-6 py-12">
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+		<div className="w-full">
+			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
 				{/* Left: Image Gallery */}
 				<div className="space-y-4">
 					<motion.div
 						key={selectedImage}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
-						className="relative w-full aspect-square rounded-2xl overflow-hidden bg-gray-50 border-2 border-gray-100"
+						className="relative w-full aspect-square rounded-xl overflow-hidden bg-muted border shadow-sm"
 					>
 						<Image
 							src={product.images?.[selectedImage]?.src || "/placeholder.png"}
 							alt={product.images?.[selectedImage]?.alt || product.name}
 							fill
-							className="object-cover"
+							className="object-contain p-4"
 							sizes="(max-width: 1024px) 100vw, 50vw"
 							priority
 						/>
@@ -75,171 +85,194 @@ const EnhancedProductView = ({ product }: { product: WooProduct }) => {
 
 					{/* Thumbnail Grid */}
 					{product.images?.length > 1 && (
-						<div className="grid grid-cols-5 gap-3">
+						<div className="grid grid-cols-5 gap-2">
 							{product.images.map((img, index) => (
-								<motion.button
+								<button
 									key={img.id}
 									type="button"
-									whileHover={{ scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
 									onClick={() => setSelectedImage(index)}
-									className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
+									className={cn(
+										"relative aspect-square rounded-lg overflow-hidden border-2 transition-all hover:scale-105",
 										selectedImage === index
-											? "border-blue-600 ring-2 ring-blue-200"
-											: "border-gray-200 hover:border-gray-300"
-									}`}
+											? "border-primary ring-2 ring-primary/20"
+											: "border-border hover:border-primary/50",
+									)}
 								>
 									<Image
 										src={img.src}
 										alt={img.alt}
 										fill
-										className="object-cover"
+										className="object-contain p-1"
 									/>
-								</motion.button>
+								</button>
 							))}
 						</div>
 					)}
 				</div>
 
-				{/* Right: Product Info - Buy Box Hierarchy */}
+				{/* Right: Product Info */}
 				<div className="space-y-6">
 					{/* Sale Badge */}
 					{product.on_sale && (
-						<motion.div
-							initial={{ scale: 0 }}
-							animate={{ scale: 1 }}
-							className="inline-block"
-						>
-							<span className="bg-red-500 text-white px-4 py-2 rounded-full text-sm font-medium">
-								On Sale 🎉
-							</span>
-						</motion.div>
+						<Badge className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+							On Sale
+						</Badge>
 					)}
 
-					{/* Product Title (Serif H1) */}
-					<h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 leading-tight">
+					{/* Product Title */}
+					<h1 className="text-3xl md:text-4xl font-bold tracking-tight">
 						{product.name}
 					</h1>
 
-					{/* Price + Social Proof (Star rating immediately next to price) */}
-					<div className="flex items-center gap-6 flex-wrap">
-						<div className="text-4xl font-bold text-gray-900">
-							{product.sale_price ? (
-								<>
-									<span className="text-blue-600">
-										{siteConfig.currency} {product.sale_price}
-									</span>
-									<span className="text-2xl text-gray-400 line-through ml-3">
-										{siteConfig.currency} {product.regular_price}
-									</span>
-								</>
-							) : (
-								<span>
-									{siteConfig.currency} {product.price}
-								</span>
-							)}
-						</div>
-
-						{/* Star Rating */}
-						{product.rating_count > 0 && (
-							<div className="flex items-center gap-2">
-								<div className="flex items-center gap-1">
-									{[...Array(5)].map((_, i) => (
-										<Star
-											key={i.toString()}
-											className={`w-5 h-5 ${
-												i < Math.round(rating)
-													? "fill-yellow-400 text-yellow-400"
-													: "text-gray-300"
-											}`}
-										/>
-									))}
+					{/* Price + Rating Card */}
+					<Card>
+						<div className="p-4 space-y-3">
+							<div className="flex items-center gap-4 flex-wrap">
+								<div className="text-3xl font-bold">
+									{product.sale_price ? (
+										<>
+											<span className="text-primary">
+												{siteConfig.currency} {product.sale_price}
+											</span>
+											<span className="text-xl text-muted-foreground line-through ml-2">
+												{siteConfig.currency} {product.regular_price}
+											</span>
+										</>
+									) : (
+										<span>
+											{siteConfig.currency} {product.price}
+										</span>
+									)}
 								</div>
-								<span className="text-sm text-gray-600">
-									({product.rating_count} reviews)
-								</span>
-							</div>
-						)}
-					</div>
 
-					{/* Stock Status */}
-					<div className="flex items-center gap-2">
-						{product?.stock_status === "instock" ? (
-							<span className="text-green-600 flex items-center gap-2 font-medium">
-								<CheckCircle className="w-5 h-5" /> In Stock
-							</span>
-						) : (
-							<span className="text-red-500 flex items-center gap-2 font-medium">
-								<XCircle className="w-5 h-5" /> Out of Stock
-							</span>
-						)}
-					</div>
+								{/* Star Rating */}
+								{product.rating_count > 0 && (
+									<div className="flex items-center gap-2">
+										<div className="flex items-center gap-1">
+											{[...Array(5)].map((_, i) => (
+												<Star
+													key={i.toString()}
+													className={cn(
+														"w-4 h-4",
+														i < Math.round(rating)
+															? "fill-yellow-400 text-yellow-400"
+															: "text-muted",
+													)}
+												/>
+											))}
+										</div>
+										<span className="text-sm text-muted-foreground">
+											({product.rating_count})
+										</span>
+									</div>
+								)}
+							</div>
+
+							{/* Stock Status */}
+							<div className="flex items-center gap-2">
+								{product?.stock_status === "instock" ? (
+									<Badge
+										variant="outline"
+										className="text-green-600 border-green-600"
+									>
+										<CheckCircle className="w-3 h-3 mr-1" /> In Stock
+									</Badge>
+								) : (
+									<Badge
+										variant="outline"
+										className="text-destructive border-destructive"
+									>
+										<XCircle className="w-3 h-3 mr-1" /> Out of Stock
+									</Badge>
+								)}
+							</div>
+						</div>
+					</Card>
 
 					{/* Short Description */}
 					{product.short_description && (
 						<div
-							className="text-lg text-gray-600 leading-relaxed"
+							className="text-muted-foreground leading-relaxed"
 							dangerouslySetInnerHTML={{
 								__html: product.short_description,
 							}}
 						/>
 					)}
 
-					<Separator className="my-6" />
+					{/* Delivery Info Cards */}
+					<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+						<Card>
+							<div className="p-4 flex items-center gap-3">
+								<div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+									<TruckIcon className="w-5 h-5 text-primary" />
+								</div>
+								<div>
+									<p className="font-medium text-sm">Free Delivery</p>
+									<p className="text-xs text-muted-foreground">
+										Orders over $50
+									</p>
+								</div>
+							</div>
+						</Card>
+						<Card>
+							<div className="p-4 flex items-center gap-3">
+								<div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+									<Package className="w-5 h-5 text-primary" />
+								</div>
+								<div>
+									<p className="font-medium text-sm">Easy Returns</p>
+									<p className="text-xs text-muted-foreground">
+										30-day guarantee
+									</p>
+								</div>
+							</div>
+						</Card>
+					</div>
 
 					{/* Action Buttons */}
-					<div className="flex gap-4">
+					<div className="flex gap-3">
 						{product?.stock_status === "instock" ? (
-							<motion.div whileTap={{ scale: 0.95 }} className="flex-1">
-								<Button className="w-full h-14 text-lg font-medium bg-blue-600 hover:bg-blue-700">
-									<ShoppingCart className="w-5 h-5 mr-2" />
-									Add to Cart
-								</Button>
-							</motion.div>
+							<Button size="lg" className="flex-1">
+								<ShoppingCart className="w-4 h-4 mr-2" />
+								Add to Cart
+							</Button>
 						) : (
-							<Button className="flex-1 h-14 text-lg" disabled>
+							<Button size="lg" className="flex-1" disabled>
 								Out of Stock
 							</Button>
 						)}
 
-						<motion.button
-							type="button"
-							whileTap={{ scale: 0.9 }}
+						<Button
+							size="lg"
+							variant="outline"
 							onClick={handleFavoriteClick}
-							className="h-14 w-14 flex items-center justify-center border-2 border-gray-300 rounded-lg hover:border-red-500 transition-colors"
+							className={cn(isFavorite && "text-red-500 border-red-500")}
 						>
-							<motion.div
-								animate={isFavorite ? { scale: [1, 1.3, 1] } : {}}
-								transition={{ duration: 0.3 }}
-							>
-								<Heart
-									className={`w-6 h-6 ${
-										isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"
-									}`}
-								/>
-							</motion.div>
-						</motion.button>
+							<Heart className={cn("w-4 h-4", isFavorite && "fill-current")} />
+						</Button>
 					</div>
 
 					{/* Product Meta */}
-					<div className="pt-6 space-y-2 text-gray-600">
-						<div>SKU: {product?.sku || "N/A"}</div>
-						{product.categories?.length > 0 && (
+					<Card>
+						<div className="p-4 space-y-2 text-sm">
 							<div className="flex items-center gap-2">
-								<span>Categories:</span>
-								<div className="flex gap-2">
-									{product.categories.map((cat) => (
-										<span
-											key={cat.id}
-											className="bg-gray-100 px-3 py-1 rounded-full text-sm"
-										>
-											{cat.name}
-										</span>
-									))}
-								</div>
+								<span className="text-muted-foreground">SKU:</span>
+								<span className="font-medium">{product?.sku || "N/A"}</span>
 							</div>
-						)}
-					</div>
+							{product.categories?.length > 0 && (
+								<div className="flex items-center gap-2">
+									<span className="text-muted-foreground">Categories:</span>
+									<div className="flex gap-2 flex-wrap">
+										{product.categories.map((cat) => (
+											<Badge key={cat.id} variant="secondary">
+												{cat.name}
+											</Badge>
+										))}
+									</div>
+								</div>
+							)}
+						</div>
+					</Card>
 				</div>
 			</div>
 
@@ -280,5 +313,4 @@ const EnhancedProductView = ({ product }: { product: WooProduct }) => {
 		</div>
 	);
 };
-
 export default EnhancedProductView;

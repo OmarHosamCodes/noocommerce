@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { env } from "@/env";
 import { siteConfig } from "@/lib/config";
 import type { WooProduct } from "@/types/woo";
+import type { Metadata } from "next";
 import ProductDescription from "./ProductDescription";
 import SimpleProductView from "./SimpleProductView";
 import VariableProductView from "./VariableProductView";
@@ -115,15 +115,19 @@ const ProductPage = async ({
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>
-			<Breadcrumb
-				links={[
-					{ title: "Home", href: "/" },
-					{ title: "Shop", href: "/shop" },
-					{ title: product.name, href: "#" },
-				]}
-			/>
+			<div className="border-b bg-muted/30">
+				<div className="container px-4">
+					<Breadcrumb
+						links={[
+							{ title: "Home", href: "/" },
+							{ title: "Shop", href: "/shop" },
+							{ title: product.name, href: "#" },
+						]}
+					/>
+				</div>
+			</div>
 
-			<div className="container mx-auto px-4 py-10 bg-white">
+			<div className="container mx-auto px-4 py-8 md:py-12">
 				{product.type === "simple" && <SimpleProductView product={product} />}
 				{product.type === "variable" && (
 					<VariableProductView product={product} />

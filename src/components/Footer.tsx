@@ -1,112 +1,158 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { siteConfig } from "@/lib/config";
+import { Facebook, Instagram, Mail, Phone, Twitter } from "lucide-react";
 import Link from "next/link";
 
 const Footer = () => {
 	return (
-		<footer className="bg-white border-t border-gray-300 text-gray-700 pt-10 pb-6">
-			<div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-				{/* Column 1: Brand Info */}
-				<div>
-					<h2 className="text-gray-900 text-lg font-semibold mb-4">
-						Zain Mart
-					</h2>
-					<p className="text-sm mb-4">
-						Your one-stop shop for everyday essentials. Quality products, best
-						prices, and fast delivery.
-					</p>
-					<div className="flex space-x-4">
-						{/* <Link href="#" className="hover:text-gray-900 hover:underline hover:underline"><Facebook size={18} /></Link>
-            <Link href="#" className="hover:text-gray-900 hover:underline"><Instagram size={18} /></Link>
-            <Link href="#" className="hover:text-gray-900 hover:underline"><Twitter size={18} /></Link>
-            <Link href="#" className="hover:text-gray-900 hover:underline"><Youtube size={18} /></Link> */}
+		<footer className="bg-muted/50 border-t">
+			<div className="container mx-auto px-4 py-12">
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+					{/* Column 1: Brand Info */}
+					<div className="space-y-4">
+						<h2 className="text-xl font-bold">{siteConfig.title}</h2>
+						<p className="text-sm text-muted-foreground">
+							Your one-stop shop for quality products. Best prices and fast
+							delivery guaranteed.
+						</p>
+						<div className="flex gap-3">
+							<Button variant="ghost" size="icon" asChild>
+								<Link href="#" aria-label="Facebook">
+									<Facebook className="h-4 w-4" />
+								</Link>
+							</Button>
+							<Button variant="ghost" size="icon" asChild>
+								<Link href="#" aria-label="Twitter">
+									<Twitter className="h-4 w-4" />
+								</Link>
+							</Button>
+							<Button variant="ghost" size="icon" asChild>
+								<Link href="#" aria-label="Instagram">
+									<Instagram className="h-4 w-4" />
+								</Link>
+							</Button>
+						</div>
+					</div>
+
+					{/* Column 2: Customer Service */}
+					<div className="space-y-4">
+						<h3 className="font-semibold">Customer Service</h3>
+						<ul className="space-y-3 text-sm">
+							<li>
+								<Link
+									href="#"
+									className="text-muted-foreground hover:text-foreground transition-colors"
+								>
+									Contact Us
+								</Link>
+							</li>
+							<li>
+								<Link
+									href="#"
+									className="text-muted-foreground hover:text-foreground transition-colors"
+								>
+									FAQs
+								</Link>
+							</li>
+							<li>
+								<Link
+									href="#"
+									className="text-muted-foreground hover:text-foreground transition-colors"
+								>
+									Returns & Refunds
+								</Link>
+							</li>
+							<li>
+								<Link
+									href="#"
+									className="text-muted-foreground hover:text-foreground transition-colors"
+								>
+									Shipping Info
+								</Link>
+							</li>
+						</ul>
+					</div>
+
+					{/* Column 3: Information */}
+					<div className="space-y-4">
+						<h3 className="font-semibold">Information</h3>
+						<ul className="space-y-3 text-sm">
+							<li>
+								<Link
+									href="#"
+									className="text-muted-foreground hover:text-foreground transition-colors"
+								>
+									About Us
+								</Link>
+							</li>
+							<li>
+								<Link
+									href="#"
+									className="text-muted-foreground hover:text-foreground transition-colors"
+								>
+									Privacy Policy
+								</Link>
+							</li>
+							<li>
+								<Link
+									href="#"
+									className="text-muted-foreground hover:text-foreground transition-colors"
+								>
+									Terms & Conditions
+								</Link>
+							</li>
+							<li>
+								<Link
+									href="#"
+									className="text-muted-foreground hover:text-foreground transition-colors"
+								>
+									Blog
+								</Link>
+							</li>
+						</ul>
+					</div>
+
+					{/* Column 4: Newsletter */}
+					<div className="space-y-4">
+						<h3 className="font-semibold">Newsletter</h3>
+						<p className="text-sm text-muted-foreground">
+							Subscribe for updates on new arrivals and offers.
+						</p>
+						<form className="flex gap-2">
+							<Input
+								type="email"
+								placeholder="Enter your email"
+								className="flex-1"
+							/>
+							<Button type="submit" size="icon">
+								<Mail className="h-4 w-4" />
+							</Button>
+						</form>
+						<div className="space-y-2 text-sm text-muted-foreground">
+							<div className="flex items-center gap-2">
+								<Phone className="h-4 w-4" />
+								<span>0313-3430196</span>
+							</div>
+							<div className="flex items-center gap-2">
+								<Mail className="h-4 w-4" />
+								<span>support@{siteConfig.title.toLowerCase()}.com</span>
+							</div>
+						</div>
 					</div>
 				</div>
 
-				{/* Column 2: Customer Service */}
-				<div>
-					<h3 className="text-gray-900 text-lg font-semibold mb-4">
-						Customer Service
-					</h3>
-					<ul className="space-y-4 text-sm">
-						<li>
-							<Link href="#" className="hover:text-gray-900 hover:underline">
-								Contact Us
-							</Link>
-						</li>
-						<li>
-							<Link href="#" className="hover:text-gray-900 hover:underline">
-								FAQs
-							</Link>
-						</li>
-						<li>
-							<Link href="#" className="hover:text-gray-900 hover:underline">
-								Returns & Refunds
-							</Link>
-						</li>
-						<li>
-							<Link href="#" className="hover:text-gray-900 hover:underline">
-								Shipping Info
-							</Link>
-						</li>
-					</ul>
-				</div>
+				<Separator className="my-8" />
 
-				{/* Column 3: Information */}
-				<div>
-					<h3 className="text-gray-900 text-lg font-semibold mb-4">
-						Information
-					</h3>
-					<ul className="space-y-2 text-sm">
-						<li>
-							<Link href="#" className="hover:text-gray-900 hover:underline">
-								About Us
-							</Link>
-						</li>
-						<li>
-							<Link href="#" className="hover:text-gray-900 hover:underline">
-								Privacy Policy
-							</Link>
-						</li>
-						<li>
-							<Link href="#" className="hover:text-gray-900 hover:underline">
-								Terms & Conditions
-							</Link>
-						</li>
-						<li>
-							<Link href="#" className="hover:text-gray-900 hover:underline">
-								Blog
-							</Link>
-						</li>
-					</ul>
-				</div>
-
-				{/* Column 4: Newsletter */}
-				<div>
-					<h3 className="text-gray-900 text-lg font-semibold mb-4">
-						Join Our Newsletter
-					</h3>
-					<p className="text-sm mb-4">
-						Subscribe to get updates on new arrivals, offers, and more.
+				<div className="text-center text-sm text-muted-foreground">
+					<p>
+						© {new Date().getFullYear()} {siteConfig.title}. All rights
+						reserved.
 					</p>
-					<form className="flex">
-						<input
-							type="email"
-							placeholder="Enter your email"
-							className="w-full px-3 py-2 rounded-l-md text-gray-800 focus:outline-none"
-						/>
-						<button
-							type="submit"
-							className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-r-md"
-						>
-							Subscribe
-						</button>
-					</form>
 				</div>
-			</div>
-
-			<div className="mt-10 border-t border-gray-300 pt-4 text-center text-sm text-gray-500">
-				© {new Date().getFullYear()} Zain Mart. All rights reserved.
 			</div>
 		</footer>
 	);

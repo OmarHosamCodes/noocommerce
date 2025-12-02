@@ -1,13 +1,22 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import apiClient from "@/lib/axios";
+import { UserPlus } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import apiClient from "@/lib/axios";
 
 export default function RegisterForm() {
 	const router = useRouter();
@@ -49,7 +58,7 @@ export default function RegisterForm() {
 			});
 
 			if (response.data.success) {
-				toast.success("Account created successfully! Please login.");
+				toast.success("Account created successfully!");
 				router.push("/login");
 			}
 		} catch (error: unknown) {
@@ -71,112 +80,132 @@ export default function RegisterForm() {
 	};
 
 	return (
-		<div className="w-full max-w-md mx-auto p-6">
-			<div className="mb-6">
-				<h1 className="text-2xl font-bold mb-2">Create Account</h1>
-				<p className="text-gray-600">
-					Sign up to start shopping with us today.
-				</p>
-			</div>
-
-			<form onSubmit={handleSubmit} className="space-y-4">
-				<div className="grid grid-cols-2 gap-4">
-					<div>
-						<Label htmlFor="firstName">First Name</Label>
-						<Input
-							id="firstName"
-							name="firstName"
-							type="text"
-							placeholder="John"
-							value={formData.firstName}
-							onChange={handleChange}
-							disabled={isLoading}
-						/>
+		<div className="w-full max-w-md mx-auto">
+			<Card className="border-0 shadow-lg">
+				<CardHeader className="space-y-1">
+					<div className="flex items-center justify-center mb-4">
+						<div className="p-3 rounded-full bg-primary/10">
+							<UserPlus className="h-6 w-6 text-primary" />
+						</div>
 					</div>
+					<CardTitle className="text-2xl font-bold text-center">
+						Create Account
+					</CardTitle>
+					<CardDescription className="text-center">
+						Join us today and start shopping
+					</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<form onSubmit={handleSubmit} className="space-y-4">
+						<div className="grid grid-cols-2 gap-4">
+							<div className="space-y-2">
+								<Label htmlFor="firstName">First Name</Label>
+								<Input
+									id="firstName"
+									name="firstName"
+									type="text"
+									placeholder="John"
+									value={formData.firstName}
+									onChange={handleChange}
+									disabled={isLoading}
+								/>
+							</div>
 
-					<div>
-						<Label htmlFor="lastName">Last Name</Label>
-						<Input
-							id="lastName"
-							name="lastName"
-							type="text"
-							placeholder="Doe"
-							value={formData.lastName}
-							onChange={handleChange}
+							<div className="space-y-2">
+								<Label htmlFor="lastName">Last Name</Label>
+								<Input
+									id="lastName"
+									name="lastName"
+									type="text"
+									placeholder="Doe"
+									value={formData.lastName}
+									onChange={handleChange}
+									disabled={isLoading}
+								/>
+							</div>
+						</div>
+
+						<div className="space-y-2">
+							<Label htmlFor="username">Username *</Label>
+							<Input
+								id="username"
+								name="username"
+								type="text"
+								placeholder="Choose a username"
+								value={formData.username}
+								onChange={handleChange}
+								required
+								disabled={isLoading}
+							/>
+						</div>
+
+						<div className="space-y-2">
+							<Label htmlFor="email">Email *</Label>
+							<Input
+								id="email"
+								name="email"
+								type="email"
+								placeholder="your.email@example.com"
+								value={formData.email}
+								onChange={handleChange}
+								required
+								disabled={isLoading}
+							/>
+						</div>
+
+						<div className="space-y-2">
+							<Label htmlFor="password">Password *</Label>
+							<Input
+								id="password"
+								name="password"
+								type="password"
+								placeholder="At least 6 characters"
+								value={formData.password}
+								onChange={handleChange}
+								required
+								disabled={isLoading}
+							/>
+						</div>
+
+						<div className="space-y-2">
+							<Label htmlFor="confirmPassword">Confirm Password *</Label>
+							<Input
+								id="confirmPassword"
+								name="confirmPassword"
+								type="password"
+								placeholder="Re-enter your password"
+								value={formData.confirmPassword}
+								onChange={handleChange}
+								required
+								disabled={isLoading}
+							/>
+						</div>
+
+						<Button
+							type="submit"
+							className="w-full"
+							size="lg"
 							disabled={isLoading}
-						/>
+						>
+							{isLoading ? "Creating account..." : "Create Account"}
+						</Button>
+					</form>
+
+					<Separator className="my-6" />
+
+					<div className="text-center text-sm">
+						<span className="text-muted-foreground">
+							Already have an account?{" "}
+						</span>
+						<Link
+							href="/login"
+							className="text-primary font-medium hover:underline"
+						>
+							Sign in
+						</Link>
 					</div>
-				</div>
-
-				<div>
-					<Label htmlFor="username">Username *</Label>
-					<Input
-						id="username"
-						name="username"
-						type="text"
-						placeholder="Enter your username"
-						value={formData.username}
-						onChange={handleChange}
-						required
-						disabled={isLoading}
-					/>
-				</div>
-
-				<div>
-					<Label htmlFor="email">Email *</Label>
-					<Input
-						id="email"
-						name="email"
-						type="email"
-						placeholder="your.email@example.com"
-						value={formData.email}
-						onChange={handleChange}
-						required
-						disabled={isLoading}
-					/>
-				</div>
-
-				<div>
-					<Label htmlFor="password">Password *</Label>
-					<Input
-						id="password"
-						name="password"
-						type="password"
-						placeholder="Minimum 6 characters"
-						value={formData.password}
-						onChange={handleChange}
-						required
-						disabled={isLoading}
-					/>
-				</div>
-
-				<div>
-					<Label htmlFor="confirmPassword">Confirm Password *</Label>
-					<Input
-						id="confirmPassword"
-						name="confirmPassword"
-						type="password"
-						placeholder="Re-enter your password"
-						value={formData.confirmPassword}
-						onChange={handleChange}
-						required
-						disabled={isLoading}
-					/>
-				</div>
-
-				<Button type="submit" className="w-full" disabled={isLoading}>
-					{isLoading ? "Creating Account..." : "Create Account"}
-				</Button>
-			</form>
-
-			<div className="mt-6 text-center text-sm">
-				<p className="text-gray-600">
-					Already have an account?{" "}
-					<Link href="/login" className="text-blue-600 hover:underline">
-						Login here
-					</Link>
-				</p>
-			</div>
+				</CardContent>
+			</Card>
 		</div>
 	);
 }
