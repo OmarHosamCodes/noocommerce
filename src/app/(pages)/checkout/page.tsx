@@ -1,9 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,8 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
+import { env } from "@/env";
 import { siteConfig } from "@/lib/config";
 import { useCartStore } from "@/store/cartStore";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 interface CheckoutFormData {
 	firstName: string;
@@ -25,7 +26,7 @@ interface CheckoutFormData {
 	paymentMethod: string;
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = env.NEXT_PUBLIC_BASE_URL;
 
 const CheckoutPage = () => {
 	const router = useRouter();

@@ -1,12 +1,13 @@
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { env } from "@/env";
 import { siteConfig } from "@/lib/config";
 import { cn } from "@/lib/utils";
 import type { WooProductCategory } from "@/types/woo";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
 import { Slider } from "../ui/slider";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = env.NEXT_PUBLIC_BASE_URL;
 
 const FilterShop = () => {
 	const router = useRouter();

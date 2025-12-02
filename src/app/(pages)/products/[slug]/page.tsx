@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { env } from "@/env";
 import { siteConfig } from "@/lib/config";
 import type { WooProduct } from "@/types/woo";
+import type { Metadata } from "next";
 import ProductDescription from "./ProductDescription";
 import SimpleProductView from "./SimpleProductView";
 import VariableProductView from "./VariableProductView";
@@ -14,12 +15,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	const slug = (await params).slug;
 
-	const res = await fetch(
-		`${process.env.NEXT_PUBLIC_BASE_URL}/api/products/${slug}`,
-		{
-			cache: "no-store",
-		},
-	);
+	const res = await fetch(`${env.NEXT_PUBLIC_BASE_URL}/api/products/${slug}`, {
+		cache: "no-store",
+	});
 
 	if (!res.ok) {
 		return {
@@ -68,10 +66,9 @@ const ProductPage = async ({
 }) => {
 	const slug = (await params).slug;
 
-	const res = await fetch(
-		`${process.env.NEXT_PUBLIC_BASE_URL}/api/products/${slug}`,
-		{ cache: "no-store" },
-	);
+	const res = await fetch(`${env.NEXT_PUBLIC_BASE_URL}/api/products/${slug}`, {
+		cache: "no-store",
+	});
 
 	if (!res.ok) {
 		throw new Error("Failed to fetch product");

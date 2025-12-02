@@ -1,6 +1,7 @@
 import CategorySlider from "@/components/home/CategorySlider";
 import Hero from "@/components/home/Hero";
 import ProductsGallery from "@/components/home/ProductsGallery";
+import { env } from "@/env";
 import { getNewArrivals, getTopSellings } from "@/lib/function";
 
 import type { WooProduct, WooProductCategory } from "@/types/woo";
@@ -14,7 +15,7 @@ export default async function Home() {
 	const bestSellings: WooProduct[] = await getTopSellings(4);
 
 	const categoriesFetch = await fetch(
-		`${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`,
+		`${env.NEXT_PUBLIC_BASE_URL}/api/categories`,
 		{
 			next: { revalidate: 3600 },
 		},

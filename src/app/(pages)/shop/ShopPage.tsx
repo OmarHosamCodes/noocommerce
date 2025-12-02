@@ -1,7 +1,5 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import ProductCard from "@/components/ProductCard";
 import FilterShop from "@/components/shop/Filter";
@@ -16,7 +14,10 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import VariableProductCard from "@/components/VariableProductCard";
+import { env } from "@/env";
 import type { WooProduct } from "@/types/woo";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const sortOptions = [
 	{ label: "Default", value: "rating" },
@@ -25,7 +26,7 @@ const sortOptions = [
 	{ label: "Newest", value: "date" },
 ];
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = env.NEXT_PUBLIC_BASE_URL;
 
 export default function ShopPage() {
 	const router = useRouter();
